@@ -1,4 +1,4 @@
-% 1 - любые прототипы
+% 1 - любые прототипы, 
 my_append([], L, L).
 my_append([X|L1], L2, [X|L3]):- my_append(L1, L2, L3).
 
@@ -134,8 +134,9 @@ short_path(X, Y, L) :-
 cyclic() :-
     path(X, Y, L),
     path(X, Y, L1),
-    dif(X, Y),
-    dif(L, L1).
+    X \== Y,
+    L \== L1,
+    !;
     % findall([L], path(X, Y, L), Bag),
     % dif(X, Y).
     % % length(Bag, Length),
@@ -155,4 +156,11 @@ get_vertexes(L) :-
 
 % 20
 is_connected() :-
-    path(X, Y, L).
+    get_vertexes(L),
+    member(X, L), 
+    member(Y, L),
+    X \== Y,
+    findall([PathList], path(X, Y, PathList), Bag),
+    length(Bag, 0),
+    !, fail.
+is_connected().
