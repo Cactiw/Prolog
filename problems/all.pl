@@ -1,4 +1,4 @@
-% 1 - любые прототипы, 
+% 1 - любые прототипы, неопределён только (o, o, o)
 my_append([], L, L).
 my_append([X|L1], L2, [X|L3]):- my_append(L1, L2, L3).
 
@@ -20,7 +20,8 @@ delete_all(E, [E|T], Res) :-
 delete_all(E, [X|T], [X|Res]) :-
     delete_all(E, T, Res).
 
-% 5 - (i, i, o), (i, i, i), (o, i, i), (i, o, i)
+% 5 - (i, i, i), (o, i, i)
+% (i, i, o), (i, o, i) - неопределённые
 delete_one(E, [E|T], T).
 delete_one(E, [X|T], [X|Res]) :-
     delete_one(E, T, Res).
@@ -32,13 +33,15 @@ no_doubles([E|T], [E|ResFinal]) :-
 % no_doubles([1, 1, 2, 3, 1, 4, 4, 5, 4, 5], X).
 % no_doubles([1, 1, 2, 3, 1, 4, 4, 5, 4, 5], [1, 2, 3, 4, 5]).
 
-% 7 - (i, i), (i, o), (o, i), (o, o)
+% 7 - (i, i), (i, o)
+% (o, i), (o, o) - неопределённые
 sublist(L1, L2) :-
     append(X, Y, L2),
     append(Z, L1, X).
     dif(L1, []).
 
 % 8 - Все возможные прототипы
+% (i, o, o), (o, i, o), (o, o, i), (o, o, o) - неопределённые
 number(E, N, L) :-
     count_number(E, 0, L, N).
 
@@ -48,6 +51,7 @@ count_number(E, N, [X|T], Res) :-
     count_number(E, N1, T, Res).
 
 % 12 - из домашнего задания, все прототипы
+% неопределённые - (o, o)
 tree_depth(empty, 0).
 tree_depth(tree(L, _, R), Res) :-
     tree_depth(L, LRes),
@@ -67,12 +71,14 @@ sub_tree(tree(L1, X1, R1), tree(L2, Y, R2)) :-
 %               tree(empty, p, empty), k, tree(empty, r, empty)))).
 
 % 14 - все прототипы
+% (o, o) - неопределён
 flatten_tree(T, L) :- flat(T, [], L).
 flat(empty, L, L).
 flat(tree(TL, M, TR), Ac, Res) :-
     flat(TR, Ac, Res1), flat(TL, [M|Res1], Res).
 
 % 15 - искренне не понимаю, почему не работает, всё правильно же??
+% Во время сдачи в дискорде задачу приняли.
 substitute(empty, _, _, empty).
 substitute(tree(TL, V, TR), V, T, tree(NewL, T, newR)) :-
     !,
@@ -93,6 +99,7 @@ has_edge(X, Y, L) :-
     edge(X, Y, L); edge(Y, X, L).
 
 % 16 - все прототипы
+% неопределённые (i, o, o), (i, o, i), (o, i, o), (o, o, o)
 path(X, Y, L) :- 
     count_path(X, Y, L, _).
 
@@ -136,11 +143,7 @@ cyclic() :-
     path(X, Y, L1),
     X \== Y,
     L \== L1,
-    !;
-    % findall([L], path(X, Y, L), Bag),
-    % dif(X, Y).
-    % % length(Bag, Length),
-    % % Length > 1.
+    !.
 
 % (i, o), [(i, i) - только в правильном порядке] 
 create_set([], []).
