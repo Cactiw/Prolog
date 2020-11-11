@@ -80,13 +80,13 @@ flat(tree(TL, M, TR), Ac, Res) :-
 % 15 - искренне не понимаю, почему не работает, всё правильно же??
 % Во время сдачи в дискорде задачу приняли.
 substitute(empty, _, _, empty).
-substitute(tree(TL, V, TR), V, T, tree(NewL, T, newR)) :-
+substitute(tree(TL, V, TR), V, T, tree(NewL, T, NewR)) :-
     !,
     substitute(TL, V, T, NewL), 
-    substitute(TR, V, T, newR).
-substitute(tree(TL, M, TR), V, T, tree(NewL, M, newR)) :-
+    substitute(TR, V, T, NewR).
+substitute(tree(TL, M, TR), V, T, tree(NewL, M, NewR)) :-
     substitute(TL, V, T, NewL), 
-    substitute(TR, V, T, newR).    
+    substitute(TR, V, T, NewR).    
 
 
 edge(a, c, 8).
@@ -94,6 +94,7 @@ edge(a, b, 3).
 edge(c, d, 12).
 edge(b, d, 0).
 edge(e, d, 9).
+% edge(b, e, 9).
 
 has_edge(X, Y, L) :-
     edge(X, Y, L); edge(Y, X, L).
@@ -127,14 +128,34 @@ min_path(X, Y, L) :-
     min(Bag, MinLength),
     count_path(X, Y, L, MinLength).
 
-% 18 - (i, i, o)
-short_path(X, Y, L) :-
-    findall([L], path(X, Y, L), Bag),
-    flat(Bag, BagFlatted),  %  Выпрямляем список на один уровень, чтобы можно было посчитать длины
-    maplist(length, BagFlatted, BagLengths),  % Считаем длины найденных путей
-    min( BagLengths, MinLength),  % Ищем минимальную длину пути
-    path(X, Y, L),  % Находим путь с нужной нам длиной
-    length(L, MinLength).
+% % 18 - (i, i, o), (i, i, i)
+
+% Решение с перебором всех путей - неверное
+% short_path(X, Y, L) :-
+%     findall([L], path(X, Y, L), Bag),
+%     flat(Bag, BagFlatted),  %  Выпрямляем список на один уровень, чтобы можно было посчитать длины
+%     maplist(length, BagFlatted, BagLengths),  % Считаем длины найденных путей
+%     min( BagLengths, MinLength),  % Ищем минимальную длину пути
+%     path(X, Y, L),  % Находим путь с нужной нам длиной
+%     length(L, MinLength).
+
+
+% Нормальное решение с обходом в ширину
+short_path(X, Y, Lres) :-
+    short_path(X, Y, L, [], [ [X, [X]] ]),
+    reverse(L, Lres).
+short_path(X, Y, [Y | PathToX], Visited, [[CurrentX, PathToX] | ProcessListTail]) :-
+    has_edge(CurrentX, Y, Skip), !.
+short_path(X, Y, L, Visited, [[CurrentX, PathToX] | ProcessListTail]) :-
+    findall(Z, has_edge(CurrentX, Z, Skip), Bag),
+    exclude(member(Visited), Bag, BagFiltered),
+    maplist(add_to_path(PathToX), BagFiltered, BagResult),
+    append(ProcessListTail, BagResult, NewProcessList),
+    short_path(X, Y, L, [ CurrentX | PathToX], NewProcessList),
+    !.
+    
+
+add_to_path(Path, X, [X, [X | Path] ]).
 
 
 % 19
