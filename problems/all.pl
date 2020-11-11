@@ -50,6 +50,20 @@ count_number(E, N, [X|T], Res) :-
     N1 is N + 1,
     count_number(E, N1, T, Res).
 
+% 9 - сортировка вставками
+% (i, o), (i, i)
+insert_sort(L, Res) :- insert_sort(L, [], Res).
+insert_sort([], L, L).
+insert_sort([X|T], L, Res) :-
+    insert_correct(X, L, NewL),
+    insert_sort(T, NewL, Res).
+
+insert_correct(E, [], [E]) :- !.
+insert_correct(E, [X|T], [X|Res]) :-
+    E > X,
+    !, insert_correct(E, T, Res).
+insert_correct(E, L, [E | L]).
+
 % 12 - из домашнего задания, все прототипы
 % неопределённые - (o, o)
 tree_depth(empty, 0).
