@@ -64,6 +64,23 @@ insert_correct(E, [X|T], [X|Res]) :-
     !, insert_correct(E, T, Res).
 insert_correct(E, L, [E | L]).
 
+
+% 10 - 2 предиката для разных прототипов
+% (i, i)
+my_subset(M1, M2) :-
+    member(X, M1),
+    not(member(X, M2)),
+    !, fail.
+my_subset(M1, M2).
+
+% (o, i)
+my_subset_oi([], []).
+my_subset_oi([X|Res], [X|T]) :-
+    my_subset_oi(Res, T).
+my_subset_oi(M1, [X|T]) :-
+    my_subset_oi(M1, T).
+
+
 % 12 - из домашнего задания, все прототипы
 % неопределённые - (o, o)
 tree_depth(empty, 0).
