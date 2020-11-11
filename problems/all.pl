@@ -65,6 +65,21 @@ insert_correct(E, [X|T], [X|Res]) :-
 insert_correct(E, L, [E | L]).
 
 
+permutations([], []).
+permutations(L, [X | Res]) :-
+    member(X, L),
+    delete_all(X, L, NewL),
+    permutations(NewL, Res).
+
+
+% (i, o), [(i, i) - только в правильном порядке] 
+% Создаёт множество из списка (удаляет повторяющиеся элементы)
+create_set([], []).
+create_set([X|T], [X|S]) :-
+    delete_all(X, T, NewT),
+    create_set(NewT, S).
+
+
 % 10 - 2 предиката для разных прототипов
 % (i, i)
 my_subset(M1, M2) :-
@@ -79,6 +94,19 @@ my_subset_oi([X|Res], [X|T]) :-
     my_subset_oi(Res, T).
 my_subset_oi(M1, [X|T]) :-
     my_subset_oi(M1, T).
+
+% 11
+% (i, i, o), (i, i, i)
+union(M1, M2, ResSorted) :-
+    merge_lists(M1, M2, M3),
+    create_set(M3, Res),
+    permutations(Res, ResSorted).
+
+merge_lists([], [], []).
+merge_lists([], [X|T], [X|M3]) :-
+    merge_lists([], T, M3).
+merge_lists([X|T], M2, [X|M3]) :-
+    merge_lists(T, M2, M3).
 
 
 % 12 - из домашнего задания, все прототипы
@@ -196,12 +224,6 @@ cyclic() :-
     X \== Y,
     L \== L1,
     !.
-
-% (i, o), [(i, i) - только в правильном порядке] 
-create_set([], []).
-create_set([X|T], [X|S]) :-
-    delete_all(X, T, NewT),
-    create_set(NewT, S).
 
 get_vertexes(L) :-
     findall([X, Y], has_edge(X, Y, Length), Bag),
