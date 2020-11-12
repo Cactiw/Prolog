@@ -153,7 +153,7 @@ edge(a, b, 3).
 edge(c, d, 12).
 edge(b, d, 0).
 edge(e, d, 9).
-% edge(b, e, 9).
+edge(b, e, 9).
 
 has_edge(X, Y, L) :-
     edge(X, Y, L); edge(Y, X, L).
@@ -201,20 +201,35 @@ min_path(X, Y, L) :-
 
 % Нормальное решение с обходом в ширину
 short_path(X, Y, Lres) :-
-    short_path(X, Y, L, [], [ [X, [X]] ]),
-    reverse(L, Lres).
-short_path(X, Y, [Y | PathToX], Visited, [[CurrentX, PathToX] | ProcessListTail]) :-
-    has_edge(CurrentX, Y, Skip), !.
-short_path(X, Y, L, Visited, [[CurrentX, PathToX] | ProcessListTail]) :-
+    findOnlyFirstShortPath(X, Y, LFirst, [], [ [X, [X]] ]),
+    length(LFirst, LFirstLength),
+    findall(L, short_path(X, Y, L, [], [ [X, [X]] ], LFirstLength), ShortestPaths),
+    exclude(checkLength(LFirstLength), ShortestPaths, LFinal),
+    member(Path, LFinal),
+    reverse(Path, Lres).
+short_path(X, Y, [Y | PathToX], Visited, [[CurrentX, PathToX] | ProcessListTail], MaxLength) :-
+    has_edge(CurrentX, Y, Skip).
+short_path(X, Y, L, Visited, [[CurrentX, PathToX] | ProcessListTail], MaxLength) :-
+    check_continue_search(PathToX, MaxLength),
     findall(Z, has_edge(CurrentX, Z, Skip), Bag),
-    exclude(member(Visited), Bag, BagFiltered),
-    maplist(add_to_path(PathToX), BagFiltered, BagResult),
+    % exclude(member(Visited), Bag, BagFiltered),
+    maplist(add_to_path(PathToX), Bag, BagResult),
     append(ProcessListTail, BagResult, NewProcessList),
-    short_path(X, Y, L, [ CurrentX | PathToX], NewProcessList),
-    !.
+    short_path(X, Y, L, [ CurrentX | Visited], NewProcessList, MaxLength).
     
+checkLength(DefaultLength, Check) :-
+    length(Check, CheckLength),
+    CheckLength > DefaultLength.
 
 add_to_path(Path, X, [X, [X | Path] ]).
+first([First|Rest], First).
+findOnlyFirstShortPath(X, Y, L, Visited, Paths):- short_path(X, Y, L, Visited, Paths, -1), !.
+check_continue_search(CurrentPath, MaxLength) :-
+    MaxLength < 0.
+check_continue_search(CurrentPath, MaxLength) :-
+    MaxLength >= 0,
+    length(CurrentPath, CurrentPathLength),
+    MaxLength > CurrentPathLength.
 
 
 % 19
