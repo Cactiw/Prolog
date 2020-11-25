@@ -3,9 +3,9 @@
 
 
 
-:- dynamic property / 2.
-:- dynamic inherit / 2.
-:- dynamic default_property / 2.
+:- dynamic property / 3.
+:- dynamic inherit / 3.
+:- dynamic default_property / 3.
 
 
 inherit(transport, type, surface).
@@ -16,6 +16,12 @@ inherit(transport, type, water).
 inherit(transport, engine, electro).
 inherit(transport, engine, fuel).
 
+inherit(surface, bus).
+inherit(surface, minibus).
+inherit(surface, trolley).
+inherit(surface, taxi).
+
+
 default_property(surface, shedule, random_shedule).
 default_property(air, shedule, fixed_shedule).
 default_property(water, shedule, fixed_shedule).
@@ -23,17 +29,13 @@ default_property(underground, shedule, random_shedule).
 
 
 
-property(bus, type, surface).
 property(bus, engine, fuel).
 property(bus, shedule, fixed_shedule).
 
-property(minibus, type, surface).
 property(minibus, engine, fuel).
 
-property(trolley, type, surface).
 property(trolley, engine, electro).
 
-property(taxi, type, surface).
 property(taxi, engine, fuel).
 
 

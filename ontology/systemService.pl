@@ -1,6 +1,11 @@
 
 get_property(Class, Property, Value) :-
-    property(Class, Property, Value).
+    property(Class, Property, Value), !.
+get_property(Class, Property, Value) :-
+    property(Class, Property, AnotherValue),
+    Value \== AnotherValue,
+    !,
+    fail.
 get_property(Class, Property, Value) :-
     default_property(Class, Property, Value).
 get_property(Class, Property, Value) :-
