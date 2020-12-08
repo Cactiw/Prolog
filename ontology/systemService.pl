@@ -1,5 +1,5 @@
 
-% РЎРЅРёРјР°РµС‚ РІСЃРµРіРѕ РѕРґРёРЅ СѓСЂРѕРІРµРЅСЊ СЃРїРёСЃРєР° (РїСЂРёРјРµСЂ: [[[1, 2, 3]], [[1, 2, 3]]] -> [[1, 2, 3], [1, 2, 3]])
+% Снимает всего один уровень списка (пример: [[[1, 2, 3]], [[1, 2, 3]]] -> [[1, 2, 3], [1, 2, 3]])
 flat([], []).  
 flat([H|T],R) :- is_list(H), flat(T,T1), !, append(H,T1,R).  flat(H,H).
 
@@ -31,4 +31,15 @@ has_property(Class, Property, Value) :-
 
 get_all_properties(Class, Property, Value) :-
     distinct(has_property(Class, Property, Value)).
+
+
+display_properties() :-
+    writeln("Введите название объекта:"),
+    readln([Class | Skip]),
+    findall([X, Y], get_all_properties(Class, X, Y), Result),
+    maplist(prettyPrint, Result, _).
+
+prettyPrint([Property, Value], _) :-
+    format("~w = ~w\n", [Property, Value]).
     
+
