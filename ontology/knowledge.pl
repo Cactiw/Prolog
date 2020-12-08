@@ -18,8 +18,9 @@ inherit(transport, engine, fuel).
 
 inherit(surface, bus).
 inherit(bus, electrobus).
+inherit(bus, minibus).
 
-inherit(surface, minibus).
+
 inherit(surface, trolley).
 inherit(surface, taxi).
 
