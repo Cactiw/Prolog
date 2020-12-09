@@ -37,6 +37,8 @@ property(bus, shedule, fixed_shedule).
 
 property(minibus, engine, fuel).
 
+property(electrobus, engine, electro).
+
 property(trolley, engine, electro).
 
 property(taxi, engine, fuel).
