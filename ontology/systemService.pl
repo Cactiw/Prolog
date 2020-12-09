@@ -76,4 +76,15 @@ compare_classes([ [Property, Value ] | T ], Result2, Class1, Class2) :-
 prettyPrint([Property, Value], _) :-
     format("~w = ~w\n", [Property, Value]).
     
+add_class() :-
+    writeln("Введите название новго объекта, а также родительский объект:"),
+    readln([Class, Parent | _]),
+    assert(inherit(Parent, Class)),
+    writeln("Класс добавлен!").
+
+add_attribute() :-
+    writeln("Введите: {Имя класса} {Свойство} {Значение}"),
+    readln([Class, Property, Value]),
+    assert(property(Class, Property, Value)),
+    writeln("Свойство добавлено!").
 
