@@ -1,5 +1,5 @@
 
-% :- ['database_file.txt'].
+:- ['database_file.txt'].
 
 
 
@@ -8,90 +8,90 @@
 :- dynamic inherit / 2.
 
 
-inherit(transport, type, surface).
-inherit(transport, type, air).
-inherit(transport, type, underground).
-inherit(transport, type, water).
+% inherit(transport, type, surface).
+% inherit(transport, type, air).
+% inherit(transport, type, underground).
+% inherit(transport, type, water).
 
-inherit(transport, engine, electro).
-inherit(transport, engine, fuel).
+% inherit(transport, engine, electro).
+% inherit(transport, engine, fuel).
 
-inherit(surface, bus).
-inherit(bus, electrobus).
-inherit(bus, minibus).
-
-
-inherit(surface, trolley).
-inherit(surface, taxi).
-inherit(surface, train).
-
-inherit(trane, local_train).
-inherit(trane, express_train).
-inherit(trane, locomotive).
-inherit(train, speed_train).
-
-inherit(air, plane).
-inherit(air, helicopter).
-
-inherit(water, boat).
-inherit(water, ship).
-
-inherit(underground, subway).
+% inherit(surface, bus).
+% inherit(bus, electrobus).
+% inherit(bus, minibus).
 
 
-property(surface, shedule, random_shedule).
-property(air, shedule, fixed_shedule).
-property(water, shedule, fixed_shedule).
-property(underground, shedule, random_shedule).
+% inherit(surface, trolley).
+% inherit(surface, taxi).
+% inherit(surface, train).
 
-property(surface, capacity, many).
-property(air, capacity, many).
-property(water, capacity, small).
-property(underground, capacity, many).
+% inherit(trane, local_train).
+% inherit(trane, express_train).
+% inherit(trane, locomotive).
+% inherit(train, speed_train).
 
-property(surface, comfort, good).
-property(air, comfort, bad).
-property(water, comfort, bad).
-property(underground, comfort, good).
+% inherit(air, plane).
+% inherit(air, helicopter).
 
-property(surface, places, random).
-property(air, places, fixed).
-property(water, places, fixed).
-property(underground, places, random).
+% inherit(water, boat).
+% inherit(water, ship).
+
+% inherit(underground, subway).
 
 
-property(locomotive, engine, coal).
-property(train, engine, electro).
+% property(surface, shedule, random_shedule).
+% property(air, shedule, fixed_shedule).
+% property(water, shedule, fixed_shedule).
+% property(underground, shedule, random_shedule).
+
+% property(surface, capacity, many).
+% property(air, capacity, many).
+% property(water, capacity, small).
+% property(underground, capacity, many).
+
+% property(surface, comfort, good).
+% property(air, comfort, bad).
+% property(water, comfort, bad).
+% property(underground, comfort, good).
+
+% property(surface, places, random).
+% property(air, places, fixed).
+% property(water, places, fixed).
+% property(underground, places, random).
 
 
-property(water, engine, fuel).
-property(air, engine, fuel).
+% property(locomotive, engine, coal).
+% property(train, engine, electro).
 
-property(underground, engine, electro).
 
-property(boat, engine, electro).
-property(boat, places, random).
+% property(water, engine, fuel).
+% property(air, engine, fuel).
 
-property(ship, capacity, many).
+% property(underground, engine, electro).
 
-property(bus, engine, fuel).
-property(bus, shedule, fixed_shedule).
+% property(boat, engine, electro).
+% property(boat, places, random).
 
-property(minibus, engine, fuel).
-property(minibus, capacity, small).
-property(minibus, comfort, bad).
+% property(ship, capacity, many).
 
-property(electrobus, engine, electro).
+% property(bus, engine, fuel).
+% property(bus, shedule, fixed_shedule).
 
-property(trolley, engine, electro).
+% property(minibus, engine, fuel).
+% property(minibus, capacity, small).
+% property(minibus, comfort, bad).
 
-property(taxi, engine, fuel).
-property(taxi, places, fixed).
+% property(electrobus, engine, electro).
 
-property(helicopter, capacity, small).
-property(helicopter, places, random).
+% property(trolley, engine, electro).
 
-property(plain, comfort, good).
+% property(taxi, engine, fuel).
+% property(taxi, places, fixed).
+
+% property(helicopter, capacity, small).
+% property(helicopter, places, random).
+
+% property(plain, comfort, good).
 
 
 saveDB() :-
