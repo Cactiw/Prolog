@@ -62,6 +62,7 @@
 
 % property(locomotive, engine, coal).
 % property(train, engine, electro).
+% property(train, places, fixed).
 
 
 % property(water, engine, fuel).
