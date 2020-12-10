@@ -25,9 +25,9 @@
 % inherit(surface, taxi).
 % inherit(surface, train).
 
-% inherit(trane, local_train).
-% inherit(trane, express_train).
-% inherit(trane, locomotive).
+% inherit(train, local_train).
+% inherit(train, express_train).
+% inherit(train, locomotive).
 % inherit(train, speed_train).
 
 % inherit(air, plane).
@@ -37,6 +37,11 @@
 % inherit(water, ship).
 
 % inherit(underground, subway).
+
+% property(surface, type, surface).
+% property(air, type, air).
+% property(underground, type, underground).
+% property(water, type, water).
 
 
 % property(surface, shedule, random_shedule).
@@ -63,6 +68,9 @@
 % property(locomotive, engine, coal).
 % property(train, engine, electro).
 % property(train, places, fixed).
+% property(local_train, places, random).
+% property(local_train, comfort, bad).
+% property(express_train, places, random).
 
 
 % property(water, engine, fuel).
