@@ -44,6 +44,8 @@ property(taxi, places, fixed).
 property(helicopter, capacity, small).
 property(helicopter, places, random).
 property(plain, comfort, good).
+property(underground_trolley, comfort, not_good).
+property(underground_trolley, places, fixed).
 
 :- dynamic inherit/2.
 
@@ -62,6 +64,7 @@ inherit(air, helicopter).
 inherit(water, boat).
 inherit(water, ship).
 inherit(underground, subway).
+inherit(underground, underground_trolley).
 
 :- dynamic inherit/3.
 

@@ -95,6 +95,23 @@ add_class() :-
 add_attribute() :-
     writeln("Введите: {Имя класса} {Свойство} {Значение}"),
     readln([Class, Property, Value]),
-    assert(property(Class, Property, Value)),
+    add_attribute_work(Class, Property, Value),
     writeln("Свойство добавлено!").
+
+add_attribute_work(Class, Property, Value) :-
+    retract(property(Class, Property, _)),
+    assert(property(Class, Property, Value)).
+
+add_attribute_work(Class, Property, Value) :-
+    assert(property(Class, Property, Value)).
+
+
+delete_attribute() :-
+    writeln("Введите: {Имя класса} {Свойство}"),
+    readln([Class, Property]),
+    try_delete_attribute(Class, Property).
+
+try_delete_attribute(Class, Property) :-
+    retract(property(Class, Property, _)).
+try_delete_attribute(_, _).
 
