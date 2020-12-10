@@ -12,7 +12,7 @@ main() :-
 
 
 menuAction(1) :-
-    writeln("Not implemented").
+    get_all_classes.
 
 menuAction(2) :-
     display_properties().

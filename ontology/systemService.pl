@@ -39,6 +39,16 @@ get_all_properties(Class, Property, Value) :-
     distinct(has_property(Class, Property, Value)).
 
 
+get_all_classes() :-
+    findall(Child, distinct(inherit(_, Child)), Result),
+
+    maplist(printSingle, Result).
+
+printSingle(X) :-
+    format("~w\n", [X]).
+
+
+
 display_properties() :-
     writeln("Введите название объекта:"),
     readln([Class | _]),
