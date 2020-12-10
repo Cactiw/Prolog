@@ -74,11 +74,11 @@ compare_classes([ [ Property, Value ] | T ], Result2, Class1, Class2) :-
 compare_classes([ [ Property, Value ] | T ], Result2, Class1, Class2) :-
     has_property(Class2, Property, Value2),
     !,
-    format("~w: ~w | ~w", [Property, Value, Value2]),
+    format("~w: ~w | ~w\n", [Property, Value, Value2]),
     remove(Property, Result2, Result2New),
     compare_classes(T, Result2New, Class1, Class2).
 compare_classes([ [Property, Value ] | T ], Result2, Class1, Class2) :-
-    format("~w: ~w | NULL", [Property, Value]),
+    format("~w: ~w | NULL\n", [Property, Value]),
     compare_classes(T, Result2, Class1, Class2).
 
     
