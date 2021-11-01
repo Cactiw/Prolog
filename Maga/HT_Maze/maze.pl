@@ -29,6 +29,11 @@ create_set([X|T], [X|S]) :-
     delete_all(X, T, NewT),
     create_set(NewT, S).
 
+create_set_without_in_out(List, Result):-
+    delete_all(in, List, ListWithoutIn),
+    delete_all(out, ListWithoutIn, ListWithoutInOut),
+    create_set(ListWithoutInOut, Result).
+
 % 1 - любые прототипы, неопределён только (o, o, o)
 my_append([], L, L).
 my_append([X|L1], L2, [X|L3]):- my_append(L1, L2, L3).
@@ -41,11 +46,21 @@ delete_all(E, [E|T], Res) :-
 delete_all(E, [X|T], [X|Res]) :-
     delete_all(E, T, Res).
 
+
 find_all_rooms_from_ends(Maze, ResultNoDublicates) :-
     findall(Room, find_path(in, Room, Maze, _), ResIn),
     findall(Room, find_path(out, Room, Maze, _), ResOut),
     my_append(ResIn, ResOut, Result),
-    create_set(Result, ResultNoDublicates).
+    create_set_without_in_out(Result, ResultNoDublicates).
+
+% Снимает всего один уровень списка (пример: [[[1, 2, 3]], [[1, 2, 3]]] -> [[1, 2, 3], [1, 2, 3]])
+flat([], []).  
+flat([H|T],R) :- is_list(H), flat(T,T1), !, append(H,T1,R).  flat(H,H).
+
+find_rooms_in_ways(Maze, Result) :-
+    findall(Path, find_path(in, out, Maze, Path), AllPaths),
+    flat(AllPaths, AllRoomsInPaths),
+    create_set_without_in_out(AllRoomsInPaths, Result).
 
 % room(Maze, Room).
 room([[Room, Room2] | Maze], Room).
